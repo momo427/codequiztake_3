@@ -4,34 +4,44 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css">
     <title>Code quiz Take Three</title>
   </head>
   <body>
-    <nav>
-      <a href="./score.html">View Scores</a>
-      <div id="timer">Time Remaining:0</div>
-    </nav>
-    <section id="quiz-header">
-      <h1>Code Quiz</h1>
-      <p>How well do you know JavaScript?</p>
-    </section>
-    <section>
-      <div id="quiz">
-        <!--Questions dynamically loaded here -->
-        <h2 id="question-title">
-          <!-- Loaded question -->
-        </h2>
-        <ol id="multiple-choice">
-          <!-- Loaded multiple choice options -->
-        </ol>
-        <h4 id="right-v-wrong">
-          <!-- Loaded statement depending on weather your answer was right or wrong -->
-        </h4>
+    <section class="container">
+      <div id="quiz-container">
+        <nav>
+          <a href="./score.html">View Scores</a>
+          <div id="timer">Time Remaining:0</div>
+        </nav>
+        <section id="quiz-header">
+          <h1>Code Quiz</h1>
+          <div>
+          <p class="progress">Question x of y</p>
+        </div>
+        </section>
+        <p id="question">How do you build a code Quiz, using Javascript?</p>
+        <section class="buttons">
+            <button class="btn" id="btn0">A. 
+                <span id="choice0"></span>
+            </button>
+            <button class="btn" id="btn1">B. 
+                <span id="choice1"></span>
+            </button>
+            <button class="btn" id="btn2">C. 
+                <span id="choice2"></span>
+            </button>
+            <button class="btn" id="btn3">D. 
+                <span id="choice3"></span>
+            </button>
+
+        </section>
+        <section>
+          <button onclick="countdown()" id="startquiz">Start Quiz</button>
+          <button id="submit">Submit</button>
+          <button id="next">Next</button>
+        </section>
       </div>
-    </section>
-    <section>
-      <button onclick="countdown(), questions()" id="startquiz">Start Quiz</button>
-      <button id="submit">Submit</button>
     </section>
     <script src="./app.js"></script>
   </body>
