@@ -1,7 +1,6 @@
 //quiz variables
 let timer = document.querySelector('#timer');
 let quizHeader = document.querySelector('#quiz-header');
-let quizLoaded = document.querySelector('#quiz-container');
 let answerChoices = document.querySelector('#choice');
 let answerResponse = document.querySelector('#right-v-wrong');
 let submitQuiz = document.querySelector('#submit');
@@ -10,8 +9,7 @@ let nextButton = document.querySelector('#next')
 
 
 //score variables
-let scoreList = document.querySelector('#score-list');
-let claimVictory = document.querySelector('#claimVictory')
+
 
 //ES6
 //Quiz
@@ -46,7 +44,7 @@ function Question(question, multipleChoice, answer) {
 }
 
 Question.prototype.isCorrectAnswer = function (multipleChoice) {
-    return this.answer === multipleChoice;
+    return this.answer == multipleChoice;
 
 }
 
@@ -60,12 +58,20 @@ function displayQuestions() {
         let multipleChoice = quiz.getQuestionsIndex().multipleChoice;
         for (let i = 0; i < multipleChoice.length; i++) {
             let answerChoices = document.querySelector('#choice' + i);
-            answerChoices = multipleChoice[i];
+            answerChoices.innerHTML = multipleChoice[i];
+            response("btn" + i, answerChoices[i]);
 
         }
     }
-
 }
+
+function response(id, guess) {
+    let button = document.getElementById(id);
+    button.onclick = function() {
+        quiz.response(guess);
+        displayQuestions();
+    }
+};
 //questions array
 let quizQuestions = [
 
@@ -76,7 +82,7 @@ let quizQuestions = [
             '== and === are the same',
             '== is used for comparison between two variables but this will check strict type, which means it will check datatype and compare two values. === is used for comparision between two variables irrespective of the datatype of variable '
         ],
-        "== is used for comparison between two variables irrespective of the datatype of variable. === is used for comparision between two variables but this will check strict type, which means it will check datatype and compare two values."
+        '== is used for comparison between two variables irrespective of the datatype of variable. === is used for comparision between two variables but this will check strict type, which means it will check datatype and compare two values.'
     ),
 
     new Question("What is the difference between function declaration and function expression?",
@@ -86,7 +92,7 @@ let quizQuestions = [
             'funtions are typically shorter that expressions',
             'There are many differences between the two'
         ],
-        "The main difference between a function expression and a function declaration is the function name, which can be omitted in function expressions to create anonymous functions."
+    'The main difference between a function expression and a function declaration is the function name, which can be omitted in function expressions to create anonymous functions.'
     )
     ,
 
@@ -99,7 +105,7 @@ let quizQuestions = [
             'depends'
 
         ],
-        "depends"
+        'const'
 
     ),
 
@@ -111,7 +117,7 @@ let quizQuestions = [
             'They are the same',
             'What is global and local scope exactly?'
         ],
-        "A global variable has a global scope which means it can be defined anywhere in your JavaScript code. Local Variables − A local variable will be visible only within a function where it is defined"
+        'A global variable has a global scope which means it can be defined anywhere in your JavaScript code. Local Variables − A local variable will be visible only within a function where it is defined'
     )
     ,
 
@@ -124,7 +130,7 @@ let quizQuestions = [
             'A method is a function associated with an object, or, put differently, a method is a property of an object that is a function.'
 
         ],
-        "A method is a function associated with an object, or, put differently, a method is a property of an object that is a function."
+        'A method is a function associated with an object, or, put differently, a method is a property of an object that is a function.'
     )
     ,
 
@@ -137,7 +143,7 @@ let quizQuestions = [
             'This is a keyword used to declare variables'
 
         ],
-        "The this keyword is used within a method to refer to the current object"
+        'The this keyword is used within a method to refer to the current object'
 
     )
 ]
@@ -145,68 +151,34 @@ let quizQuestions = [
 let quiz = new Quiz(quizQuestions)
 
 
-// var i = 0
-// currentQuestionIndex = i
-
-// startButton.addEventListener('click', startQuiz)
-// nextButton.addEventListener('click', () => {
-//   currentQuestionIndex++
-//   setNextQuestion()
-// })
-
-// //question function
-
-// function setNextQuestion() {
-//     currentQuestionIndex = i
-//     shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
-//     questions(shuffledQuestions[currentQuestionIndex])
-
-// }
 
  function startQuiz() {
 
      displayQuestions()
 }
 
-// function questions() {
-
-//         let quizQuestionsIndex = 0
-//         let i = 0
-
-//         let cqTitle = document.body.append(quizTitle)
-//         let cqChoices = document.body.appendChild(answerChoices)
-
-//         cqChoices = quizQuestions[quizQuestionsIndex].multipleChoice
-
-
-
-
-//         cqTitle = quizQuestions[quizQuestionsIndex].question
-//         quizTitle.append(cqTitle)      
-
-//         cqChoices.forEach(cqChoices => {
-//             const button = document.createElement('button')
-
-//             button.innerText = cqChoices.text
-
-//             answerChoices.appendChild(button)
-
-
-//         });
-
-
-// }
+function showScores(){
+    let scoreHTML = 
+    `
+    <div class='highscore'>
+    <h1>Good Job</h1>
+    <h2> Your scored: ${quiz.score} </h2>
+    <div>
+    `;
+    let quizLoaded = document.querySelector('#quiz-container');
+    quizLoaded.innerHTML = scoreHTML;
+    
+};
 
 
 
 //timer function
-function countdown(params) {
+function countdown() {
     let time = 75
-    setInterval(function name(params) {
+    setInterval(function() {
         if (time >= 0) {
             timer.textContent = time;
             time--;
-
         }
     }, 1000)
 }

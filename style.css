@@ -3,6 +3,7 @@ body{
     background-color:rgb(241, 130, 26,.9);
     border: 3px solid yellow;
     border-radius: 10px; 
+   
 }
 nav{
     font-size: 1.2rem;
@@ -16,11 +17,11 @@ a {
 }
 .container {
     max-width: 900px;
-    margin:0 auto;
+    margin:1rem auto;
     padding: 0 2rem;
     display: flex;
-    justify-content: center;
-    align-items:center;
+    display: block;
+    align-content: center;
     height: 100vh;
 }
 
@@ -94,4 +95,10 @@ a {
     font-weight: 700;
     align-content: center;
     
+}
+score {
+    color: var(--black);
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 4rem;
 }

@@ -9,12 +9,13 @@
   </head>
   <body>
     <section class="container">
-      <div id="quiz-container">
         <nav>
-          <a href="./score.html">View Scores</a>
-          <div id="timer">Time Remaining:0</div>
-          <h1>Code Quiz</h1>
-        </nav>
+            <a href="./score.html">View Scores</a>
+            <div id="timer">Time Remaining:0</div>
+            <h1>Code Quiz</h1>
+          </nav>
+      <div id="quiz-container">
+ 
         <section id="quiz-header">
             <p id="question">How do you build a code Quiz, using Javascript?</p>
         </section>
@@ -39,11 +40,12 @@
           </div>
         <section class='controls'>
           <button onclick="countdown(), startQuiz()" id="startquiz">Start Quiz</button>
-          <button id="submit">Submit</button>
+          <button id="submit" onclick="showScores()">Submit</button>
           <button id="next">Next</button>
         </section>
       </div>
     </section>
     <script src="./app.js"></script>
+
   </body>
 </html>
