@@ -1,9 +1,9 @@
 //quiz variables
 let timer = document.querySelector('#timer');
 let quizHeader = document.querySelector('#quiz-header');
-let quizLoaded = document.querySelector('#quiz');
-let quizTitle = document.querySelector('#question-title');
-let answerChoices = document.querySelector('#answer-buttons');
+let quizLoaded = document.querySelector('#quiz-container');
+let quizTitle = document.querySelector('#question');
+let answerChoices = document.querySelector('.buttons');
 let answerResponse = document.querySelector('#right-v-wrong');
 let submitQuiz = document.querySelector('#submit');
 let startButton = document.querySelector('#startquiz')
@@ -14,12 +14,43 @@ let nextButton = document.querySelector('#next')
 let scoreList = document.querySelector('#score-list');
 let claimVictory = document.querySelector('#claimVictory')
 
+//ES6
+//Quiz
+function Quiz (quizQuestions) {
+    this.quizQuestions = quizQuestions;
+    this.score = 0;
+    this.quizQuestionsIndex = 0
+}
+
+
+Quiz.prototype.getQuestionsIndex = function(){
+        return this.quizQuestions[this.quizQuestionsIndex];
+}
+
+Quiz.prototype.response = function(answer){
+    if(this.getQuestionsIndex().isCorrectAnswer(answer)){
+        this.score++;
+    }
+    this.quizQuestionsIndex++;
+}
+
+Quiz.prototype.quizComplete = function(){
+    return this.quizQuestionsIndex == this.quizQuestions.length
+}
+
+//Quiz Questions 
+
+function Question(question,multipleChoice,answer){
+    this.quetion = question;
+    this.multipleChoice = multipleChoice;
+    this.answer = answer;
+}
 
 
 //questions array
-const quizQuestions = [
+let quizQuestions = [
     {
-        question: "What is the difference between === and ==?",
+       new Question: "What is the difference between === and ==?",
         multipleChoice: [{
             text:'== is used for comparison between two variables irrespective of the datatype of variable. === is used for comparision between two variables but this will check strict type, which means it will check datatype and compare two values.',
             text:'== is used to compare boleens and === is used to compare integers',
@@ -29,7 +60,7 @@ const quizQuestions = [
         answer: "== is used for comparison between two variables irrespective of the datatype of variable. === is used for comparision between two variables but this will check strict type, which means it will check datatype and compare two values."
     },
     {
-        question: "What is the difference between function declaration and function expression?",
+        new Question: "What is the difference between function declaration and function expression?",
         multipleChoice: [{
 
             text:'They are the same thing',
@@ -41,7 +72,7 @@ const quizQuestions = [
 
     },
     {
-        question: "Which keyword is best practices when declaring a variable?",
+        new Question: "Which keyword is best practices when declaring a variable?",
         multipleChoice: [{
 
             text:'let',
@@ -54,7 +85,7 @@ const quizQuestions = [
 
     },
     {
-        question: "Whats the difference between local and gloabal scope?",
+        new Question: "Whats the difference between local and gloabal scope?",
         multipleChoice: [{
 
             text:'A global variable has a global scope which means it can be defined anywhere in your JavaScript code. Local Variables − A local variable will be visible only within a function where it is defined',
@@ -66,7 +97,7 @@ const quizQuestions = [
 
     },
     {
-        question: "What is a method?",
+        new Question: "What is a method?",
         multipleChoice: [{
 
             text:'A method is a way of debugging your code quickly and efficiently',
@@ -79,7 +110,7 @@ const quizQuestions = [
 
     },
     {
-        question: "What is the function of the this keyword?",
+        new Question: "What is the function of the this keyword?",
         multipleChoice: [{
 
             text:'The this keyword is used within a method to refer to the current object',
@@ -95,57 +126,57 @@ const quizQuestions = [
 
 
 
-var i = 0
-currentQuestionIndex = i
+// var i = 0
+// currentQuestionIndex = i
 
-startButton.addEventListener('click', startQuiz)
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++
-  setNextQuestion()
-})
+// startButton.addEventListener('click', startQuiz)
+// nextButton.addEventListener('click', () => {
+//   currentQuestionIndex++
+//   setNextQuestion()
+// })
 
-//question function
+// //question function
 
-function setNextQuestion() {
-    currentQuestionIndex = i
-    shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
-    questions(shuffledQuestions[currentQuestionIndex])
+// function setNextQuestion() {
+//     currentQuestionIndex = i
+//     shuffledQuestions = quizQuestions.sort(() => Math.random() - .5)
+//     questions(shuffledQuestions[currentQuestionIndex])
     
-}
+// }
 
-function startQuiz() {
+// function startQuiz() {
     
-    questions()
-}
+//     questions()
+// }
 
-function questions() {
+// function questions() {
 
-        let quizQuestionsIndex = 0
-        let i = 0
+//         let quizQuestionsIndex = 0
+//         let i = 0
 
-        let cqTitle = document.body.append(quizTitle)
-        let cqChoices = document.body.appendChild(answerChoices)
+//         let cqTitle = document.body.append(quizTitle)
+//         let cqChoices = document.body.appendChild(answerChoices)
 
-        cqChoices = quizQuestions[quizQuestionsIndex].multipleChoice
+//         cqChoices = quizQuestions[quizQuestionsIndex].multipleChoice
 
         
        
         
-        cqTitle = quizQuestions[quizQuestionsIndex].question
-        quizTitle.append(cqTitle)      
+//         cqTitle = quizQuestions[quizQuestionsIndex].question
+//         quizTitle.append(cqTitle)      
 
-        cqChoices.forEach(cqChoices => {
-            const button = document.createElement('button')
+//         cqChoices.forEach(cqChoices => {
+//             const button = document.createElement('button')
         
-            button.innerText = cqChoices.text
+//             button.innerText = cqChoices.text
     
-            answerChoices.appendChild(button)
+//             answerChoices.appendChild(button)
             
             
-        });
+//         });
 
 
-}
+// }
 
 
 
