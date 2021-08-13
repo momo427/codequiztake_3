@@ -13,14 +13,12 @@
         <nav>
           <a href="./score.html">View Scores</a>
           <div id="timer">Time Remaining:0</div>
+          <h1>Code Quiz</h1>
         </nav>
         <section id="quiz-header">
-          <h1>Code Quiz</h1>
-          <div>
-          <p class="progress">Question x of y</p>
-        </div>
+            <p id="question">How do you build a code Quiz, using Javascript?</p>
         </section>
-        <p id="question">How do you build a code Quiz, using Javascript?</p>
+
         <section class="buttons">
             <button class="btn" id="btn0">A. 
                 <span id="choice0"></span>
@@ -36,7 +34,10 @@
             </button>
 
         </section>
-        <section>
+        <div>
+            <p class="progress">Question x of y</p>
+          </div>
+        <section class='controls'>
           <button onclick="countdown()" id="startquiz">Start Quiz</button>
           <button id="submit">Submit</button>
           <button id="next">Next</button>
