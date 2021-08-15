@@ -7,8 +7,16 @@ let submitQuiz = document.querySelector('#submit');
 let startButton = document.querySelector('#startquiz')
 let nextButton = document.querySelector('#next')
 
+var highScorePage = document.querySelector('.highScorePage')
+var playerName = document.querySelector("#playerName");
+var submit = document.querySelector("#submit");
+var quizResults = document.querySelector(".quizResults");
+var finalScore = document.querySelector("#finalScore");
+var highScores = document.querySelector(".highScores");
+var clearHighScores = document.querySelector("#clearHighScores");
+var restartButton = document.querySelector("#restartButton");
+var scoreBoard = document.querySelector("#scores");
 
-//score variables
 
 
 //ES6
@@ -28,6 +36,7 @@ Quiz.prototype.response = function (answer) {
     if (this.getQuestionsIndex().isCorrectAnswer(answer)) {
         this.score++;
     }
+
     this.quizQuestionsIndex++;
 }
 
@@ -44,9 +53,10 @@ function Question(question, multipleChoice, answer) {
 }
 
 Question.prototype.isCorrectAnswer = function (multipleChoice) {
-    return this.answer == multipleChoice;
+    return this.answer === multipleChoice;
 
 }
+
 
 function displayQuestions() {
     if (quiz.complete()) {
@@ -59,16 +69,25 @@ function displayQuestions() {
         for (let i = 0; i < multipleChoice.length; i++) {
             let answerChoices = document.querySelector('#choice' + i);
             answerChoices.innerHTML = multipleChoice[i];
-            response("btn" + i, answerChoices[i]);
+            response("btn" + i, multipleChoice[i]);
 
         }
+        showProgress();
     }
 }
+// SHOW QUIZ PROGRESS
+function showProgress() {
+    let currentQuestionNumber = quiz.quizQuestionsIndex + 1;
+    let ProgressElement = document.getElementById("progress");
+    ProgressElement.innerHTML =
+        `Question ${currentQuestionNumber} of ${quiz.quizQuestions.length}`;
+};
 
-function response(id, guess) {
+
+function response(id, response) {
     let button = document.getElementById(id);
-    button.onclick = function() {
-        quiz.response(guess);
+    button.onclick = function () {
+        quiz.response(response);
         displayQuestions();
     }
 };
@@ -92,7 +111,7 @@ let quizQuestions = [
             'funtions are typically shorter that expressions',
             'There are many differences between the two'
         ],
-    'The main difference between a function expression and a function declaration is the function name, which can be omitted in function expressions to create anonymous functions.'
+        'The main difference between a function expression and a function declaration is the function name, which can be omitted in function expressions to create anonymous functions.'
     )
     ,
 
@@ -149,36 +168,105 @@ let quizQuestions = [
 ]
 
 let quiz = new Quiz(quizQuestions)
+let score = localStorage.getItem(quiz.score)
+let scoreList=[];
 
-
-
- function startQuiz() {
-
-     displayQuestions()
+function startQuiz() {
+    displayQuestions()
 }
 
-function showScores(){
-    let scoreHTML = 
-    `
-    <div class='highscore'>
+//Scores
+
+function showScores() {
+    let scoreHTML =
+        `
+    <div class='highscoreBuild'>
     <h1>Good Job</h1>
     <h2> Your scored: ${quiz.score} </h2>
     <div>
+
+    
     `;
     let quizLoaded = document.querySelector('#quiz-container');
     quizLoaded.innerHTML = scoreHTML;
-    
+    highScorePage.style.visibility = 'visible';
+    localStorage.setItem('quiz.score', quiz.score);
+    console.log(quiz.score)
+
 };
 
+
+//record scores 
+function recordScore(x){
+    let str;
+    if (localStorage.getItem("keepScore") === null){
+        if (typeof x === typeof undefined ){
+        } else{
+            scoreList.push( {name : `${x}`, score : `${quiz.score}` })
+            str = JSON.stringify(scoreList)
+            localStorage.setItem("keepScore", str); 
+        }
+    } else{
+
+        str = localStorage.getItem("keepScore"); 
+        str = JSON.parse(str);
+        str.push( {name : `${x}`, score : `${quiz.score}` })
+        scoreList = str;
+        str = JSON.stringify(str);
+        localStorage.setItem("keepScore",str)
+    }
+}
+
+
+function clearScore(){
+    scoreBoard.innerHTML = "Recent Scores Cleared";
+    scoreList=[];
+    localStorage.clear()
+}
+
+
+
+function displayScores(){
+    let scoreKeeper="";
+    let x;
+    if (localStorage.getItem("keepScore") === null){
+        scoreBoard.innerHTML = "Currently no scores are stored"
+
+    }else{
+        
+        scoreList=localStorage.getItem("keepScore");
+        scoreList = JSON.parse(scoreList);
+        x = scoreList.sort(function(b,a){
+            return a.score + b.score
+        })
+        scoreList=[];
+        for (let i in x ){
+            scoreList.push(`<p>${x[i].name} - Score: ${x[i].score}</p>`)
+        }
+        for (let i in scoreList){
+            scoreKeeper = scoreKeeper + scoreList[i]
+        }
+        scoreBoard.innerHTML = scoreKeeper;
+    }
+}
+
+function saveScore(){
+    if (playerName.value !== ""){
+        recordScore(playerName.value);
+    }
+}
 
 
 //timer function
 function countdown() {
-    let time = 75
-    setInterval(function() {
+    let time = 120
+    setInterval(function () {
         if (time >= 0) {
             timer.textContent = time;
             time--;
+        } else {
+            showScores()
         }
     }, 1000)
 }
+

@@ -10,7 +10,6 @@
   <body>
     <section class="container">
         <nav>
-            <a href="./score.html">View Scores</a>
             <div id="timer">Time Remaining:0</div>
             <h1>Code Quiz</h1>
           </nav>
@@ -36,15 +35,35 @@
 
         </section>
         <div>
-            <p class="progress">Question x of y</p>
-          </div>
+            <p id="progress">Question x of y</p>
+        </div>
+          
         <section class='controls'>
           <button onclick="countdown(), startQuiz()" id="startquiz">Start Quiz</button>
-          <button id="submit" onclick="showScores()">Submit</button>
-          <button id="next">Next</button>
         </section>
       </div>
+      <container class="highScorePage">
+        <div class="quizResults ">
+            <div class="userName">
+                
+                <label id="name" for="name"> Enter your Name: </label>
+                <input id="playerName" type="text">
+                <button id="submit" onclick="saveScore(),displayScores()" class="button">Submit</button>
+            </div>
+    </div>
+    
+    <div class="highScores">
+    <h3 class="messageToUser">Recent Highscores:</h3>
+    <div id="scores">
+    </div>
+    <div>
+        <button onclick='clearScore()' id="clearHighScores" class="button">Clear Highscores</button>
+        <a href="./index.html">Play Again</a>
+    </div>
+    </div>
+    </container>
     </section>
+
     <script src="./app.js"></script>
 
   </body>
